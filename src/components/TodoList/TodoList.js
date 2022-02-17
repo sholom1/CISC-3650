@@ -1,19 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import styles from './TodoList.module.css';
 import { Form } from 'react-bootstrap';
 
-const TodoList = () => (
+const TodoList = (props) => (
   <div className={styles.TodoList} data-testid="TodoList">
     TodoList Component
     <Form>
-      <Form.Check type="checkbox" id="default-checkbox" label="First checkbox"/>
+      {props.tasks.map((task, index) => {
+        return <Form.Check key={index} type="checkbox" id="default-checkbox" label={task}/> 
+      })}
     </Form>
   </div>
 );
 
-TodoList.propTypes = {};
+TodoList.propTypes = {
+  tasks: [string]
+};
 
-TodoList.defaultProps = {};
+TodoList.defaultProps = {
+  tasks:["task 1", "task 2", "task 3"]
+};
 
 export default TodoList;
