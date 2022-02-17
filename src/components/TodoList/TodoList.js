@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './TodoList.module.css';
 import { Form } from 'react-bootstrap';
 
@@ -15,7 +15,7 @@ const TodoList = (props) => (
 );
 
 TodoList.propTypes = {
-  tasks: [string]
+  tasks: PropTypes.arrayOf(PropTypes.string)
 };
 
 TodoList.defaultProps = {
