@@ -21,6 +21,9 @@ class Task extends React.Component {
           <Button onClick={this.toggleTaskCreation} variant="outline-secondary" id="button-addon2">
             +
           </Button>
+          <Button varient='primary' label="Delete task">
+            <img src='/trash.svg'></img>
+          </Button>
         </InputGroup>
         {this.state.subtasks.map((taskName, index)=>{
           return <Task className="ms-4" name={taskName} key={index}/>
