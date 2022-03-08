@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TodoList.module.css';
 import { Button, Form, InputGroup, FormControl } from 'react-bootstrap';
+import Task from '../Task/Task';
 
 class TodoList extends React.Component {
   constructor(props){ 
@@ -17,7 +18,7 @@ class TodoList extends React.Component {
         TodoList Component
         <Form onSubmit={(event)=>event.preventDefault()}>
           {this.state.tasks.map((task, index) => {
-            return <Form.Check key={index} type="checkbox" id="default-checkbox" label={task}/> 
+            return <Task name={task} key={index}/>
           })}
           {this.state.creatingTask ? <InputGroup>
             <Button variant="outline-primary" onClick={this.toggleTaskCreation} id="button-addon1">
