@@ -11,7 +11,6 @@ class TodoList extends React.Component {
       tasks: [...props.tasks]
     }
     this.toggleTaskCreation = this.toggleTaskCreation.bind(this);
-    this.handleTaskCreation = this.handleTaskCreation.bind(this);
   };
   render(){
     return <div className={styles.TodoList} data-testid="TodoList">
@@ -20,35 +19,13 @@ class TodoList extends React.Component {
           {this.state.tasks.map((task, index) => {
             return <Task name={task} key={index}/>
           })}
-          {this.state.creatingTask ? <InputGroup>
-            <Button variant="outline-primary" onClick={this.toggleTaskCreation} id="button-addon1">
-              Add Task
-            </Button>
-            <FormControl
-              aria-label="text with button addon"
-              aria-describedby="basic-addon1"
-              name="newTaskName"
-              value={this.state.newTaskName}
-              onChange={this.handleTaskCreation}
-            />
-          </InputGroup> 
-          : 
-          <Button variant='primary' label="Add task" onClick={this.toggleTaskCreation}>Add task</Button>}
+          <Button variant='primary' label="Add task" onClick={this.toggleTaskCreation}>Add task</Button>
         </Form>
       </div>
   }
   toggleTaskCreation(event){
     event.preventDefault();
-    
-    this.setState((state,props)=>({creatingTask: !state.creatingTask}))
-    if (this.state.newTask?.length > 0)
-      this.setState((state) => ({tasks: [...state.tasks, state.newTask], newTask : ''}))
-    console.log(this.state);
-  }
-  handleTaskCreation(event){
-    event.preventDefault();
-    console.log(event)
-    this.setState((state)=> ({newTask: event.target.value}))
+    this.setState((state) => ({tasks: [...state.tasks, "Default task"]}))
   }
 }
 
