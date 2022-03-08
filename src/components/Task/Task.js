@@ -8,20 +8,24 @@ class Task extends React.Component {
     super(props)
     console.log(props)
     this.state = {
-      name: props.name,
+      renaming: false,
       subtasks: []
     };
-    this.toggleTaskCreation = this.toggleTaskCreation.bind(this);
+    this.addNewTask = this.addNewTask.bind(this);
+    this.toggleRenameTask = this.toggleRenameTask.bind(this);
   }
   render() {
     return <Form.Group className={this.props.className + " my-1"} control-id={`task-${this.state.name.replace(' ', '-').toLowerCase()}`}>
         <InputGroup>
           <InputGroup.Checkbox type="checkbox" id="default-checkbox basic-addon1"/>
           <InputGroup.Text className="flex-fill" variant="outline-secondary" id="inputGroup-sizing-default">{this.state.name}</InputGroup.Text>
-          <Button onClick={this.toggleTaskCreation} variant="outline-secondary" id="button-addon2">
+          <Button variant='primary' label="Rename task" onClick={this.toggleRenameTask}>
+            <img src='/vector-pen.svg'/>
+          </Button>
+          <Button onClick={this.addNewTask} variant="primary" id="button-addon2">
             +
           </Button>
-          <Button varient='primary' label="Delete task">
+          <Button variant='danger' label="Delete task" onClick={this.props.onDelete}>
             <img src='/trash.svg'></img>
           </Button>
         </InputGroup>
@@ -30,9 +34,12 @@ class Task extends React.Component {
         })}
       </Form.Group>
   };
-  toggleTaskCreation(event){
+  addNewTask(event){
     event.preventDefault();
     this.setState((state) => ({subtasks: [...state.subtasks, "Default task"]}))
+  }
+  toggleRenameTask(){
+    this.setState(state => ({renaming: !state.renaming}));
   }
 }
 
