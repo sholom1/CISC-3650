@@ -14,7 +14,7 @@ class Task extends React.Component {
     this.toggleTaskCreation = this.toggleTaskCreation.bind(this);
   }
   render() {
-    return <Form.Group className={this.props.className} control-id={`task-${this.state.name.replace(' ', '-').toLowerCase()}`}>
+    return <Form.Group className={this.props.className + " my-1"} control-id={`task-${this.state.name.replace(' ', '-').toLowerCase()}`}>
         <InputGroup>
           <InputGroup.Checkbox type="checkbox" id="default-checkbox basic-addon1"/>
           <InputGroup.Text className="flex-fill" variant="outline-secondary" id="inputGroup-sizing-default">{this.state.name}</InputGroup.Text>
@@ -23,7 +23,7 @@ class Task extends React.Component {
           </Button>
         </InputGroup>
         {this.state.subtasks.map((taskName, index)=>{
-          return <Task className="ms-3" name={taskName} key={index}/>
+          return <Task className="ms-4" name={taskName} key={index}/>
         })}
       </Form.Group>
   };
