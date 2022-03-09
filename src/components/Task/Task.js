@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Task.module.css';
 import { Form, InputGroup, Button, FormControl } from 'react-bootstrap';
+import { v4 as uuidv4 } from 'uuid';
+import generateNewTask from './TaskHelperFunctions';
 
 class Task extends React.Component {
   constructor(props){
@@ -13,6 +15,7 @@ class Task extends React.Component {
     };
     this.addNewTask = this.addNewTask.bind(this);
     this.toggleRenameTask = this.toggleRenameTask.bind(this);
+    this.onRemoveTask = this.onRemoveTask.bind(this);
   }
   render() {
     return <Form.Group className={this.props.className + " my-1"} control-id={`task-${this.props.name.replace(' ', '-').toLowerCase()}`}>
@@ -29,17 +32,25 @@ class Task extends React.Component {
             <img src='/trash.svg'></img>
           </Button>
         </InputGroup>
-        {this.state.subtasks.map((taskName, index)=>{
-          return <Task className="ms-4" name={taskName} key={index}/>
+        {this.state.subtasks.map((task, index)=>{
+          return <Task className="ms-4" name={task.name} key={task.id} onDelete={(event) => this.onRemoveTask(event, index)}/>
         })}
       </Form.Group>
   };
   addNewTask(event){
     event.preventDefault();
-    this.setState((state) => ({subtasks: [...state.subtasks, "Default task"]}))
+    this.setState((state) => ({subtasks: [...state.subtasks, generateNewTask()]}))
   }
   toggleRenameTask(){
     this.setState(state => ({renaming: !state.renaming}));
+  }
+  onRemoveTask(event, index){
+    event.preventDefault();
+    this.setState(state => {
+      let reducedTasks = [...state.subtasks]
+      reducedTasks.splice(index, 1);
+      return {subtasks: [...reducedTasks]};
+    })
   }
 }
 

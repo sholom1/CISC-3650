@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import styles from './TodoList.module.css';
 import { Button, Form, InputGroup, FormControl } from 'react-bootstrap';
 import Task from '../Task/Task';
+import { v4 as uuidv4 } from 'uuid';
+import generateNewTask from '../Task/TaskHelperFunctions';
 
 class TodoList extends React.Component {
   constructor(props){ 
     super(props)
     this.state = {
-      tasks: [...props.tasks]
+      tasks: [...(props.tasks.map(task => generateNewTask(task)))]
     }
     this.toggleTaskCreation = this.toggleTaskCreation.bind(this);
     this.onRemoveTask = this.onRemoveTask.bind(this);
@@ -18,7 +20,7 @@ class TodoList extends React.Component {
         TodoList Component
         <Form onSubmit={(event)=>event.preventDefault()}>
           {this.state.tasks.map((task, index) => {
-            return <Task name={task} key={index} onDelete={(event)=>this.onRemoveTask(event, index)}/>
+            return <Task name={task.name} key={task.id} onDelete={(event)=>this.onRemoveTask(event, index)}/>
           })}
           <Button variant='primary' label="Add task" onClick={this.toggleTaskCreation}>Add task</Button>
         </Form>
@@ -26,19 +28,14 @@ class TodoList extends React.Component {
   }
   toggleTaskCreation(event){
     event.preventDefault();
-    this.setState((state) => ({tasks: [...state.tasks, "Default task"]}))
+    this.setState((state) => ({tasks: [...state.tasks, generateNewTask()]}))
   }
   onRemoveTask(event, index){
     event.preventDefault();
-    // console.log(index)
-    // let task = [...this.state.tasks]
-    // task.splice(index, 1);
-    // console.log(task)
     this.setState(state => {
       let reducedTasks = [...state.tasks]
       reducedTasks.splice(index, 1);
-      console.log(reducedTasks)
-      return {task: [...reducedTasks]};
+      return {tasks: [...reducedTasks]};
     })
   }
 }
