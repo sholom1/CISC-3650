@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Task.module.css';
-import { Form, InputGroup, Button } from 'react-bootstrap';
+import { Form, InputGroup, Button, FormControl } from 'react-bootstrap';
 
 class Task extends React.Component {
   constructor(props){
@@ -15,10 +15,10 @@ class Task extends React.Component {
     this.toggleRenameTask = this.toggleRenameTask.bind(this);
   }
   render() {
-    return <Form.Group className={this.props.className + " my-1"} control-id={`task-${this.state.name.replace(' ', '-').toLowerCase()}`}>
+    return <Form.Group className={this.props.className + " my-1"} control-id={`task-${this.props.name.replace(' ', '-').toLowerCase()}`}>
         <InputGroup>
           <InputGroup.Checkbox type="checkbox" id="default-checkbox basic-addon1"/>
-          <InputGroup.Text className="flex-fill" variant="outline-secondary" id="inputGroup-sizing-default">{this.state.name}</InputGroup.Text>
+          <FormControl className="flex-fill" variant="outline-secondary" id="inputGroup-sizing-default" value={this.props.name} readOnly={!this.state.renaming} onChange={this.props.onNameChange}/>
           <Button variant='primary' label="Rename task" onClick={this.toggleRenameTask}>
             <img src='/vector-pen.svg'/>
           </Button>

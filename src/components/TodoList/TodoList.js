@@ -11,13 +11,14 @@ class TodoList extends React.Component {
       tasks: [...props.tasks]
     }
     this.toggleTaskCreation = this.toggleTaskCreation.bind(this);
+    this.onRemoveTask = this.onRemoveTask.bind(this);
   };
   render(){
     return <div className={styles.TodoList} data-testid="TodoList">
         TodoList Component
         <Form onSubmit={(event)=>event.preventDefault()}>
           {this.state.tasks.map((task, index) => {
-            return <Task name={task} key={index}/>
+            return <Task name={task} key={index} onDelete={(event)=>this.onRemoveTask(event, index)}/>
           })}
           <Button variant='primary' label="Add task" onClick={this.toggleTaskCreation}>Add task</Button>
         </Form>
@@ -26,6 +27,19 @@ class TodoList extends React.Component {
   toggleTaskCreation(event){
     event.preventDefault();
     this.setState((state) => ({tasks: [...state.tasks, "Default task"]}))
+  }
+  onRemoveTask(event, index){
+    event.preventDefault();
+    // console.log(index)
+    // let task = [...this.state.tasks]
+    // task.splice(index, 1);
+    // console.log(task)
+    this.setState(state => {
+      let reducedTasks = [...state.tasks]
+      reducedTasks.splice(index, 1);
+      console.log(reducedTasks)
+      return {task: [...reducedTasks]};
+    })
   }
 }
 
