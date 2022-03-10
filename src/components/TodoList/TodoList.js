@@ -14,13 +14,14 @@ class TodoList extends React.Component {
     }
     this.toggleTaskCreation = this.toggleTaskCreation.bind(this);
     this.onRemoveTask = this.onRemoveTask.bind(this);
+    this.handleRenameTask = this.handleRenameTask.bind(this);
   };
   render(){
     return <div className={styles.TodoList} data-testid="TodoList">
         TodoList Component
         <Form onSubmit={(event)=>event.preventDefault()}>
           {this.state.tasks.map((task, index) => {
-            return <Task name={task.name} key={task.id} onDelete={(event)=>this.onRemoveTask(event, index)}/>
+            return <Task name={task.name} key={task.id} id={task.id} onDelete={(event)=>this.onRemoveTask(event, index)} onNameChange={this.handleRenameTask}/>
           })}
           <Button variant='primary' label="Add task" onClick={this.toggleTaskCreation}>Add task</Button>
         </Form>
@@ -36,6 +37,14 @@ class TodoList extends React.Component {
       let reducedTasks = [...state.tasks]
       reducedTasks.splice(index, 1);
       return {tasks: [...reducedTasks]};
+    })
+  }
+  handleRenameTask(event, id){
+    this.setState((state) => {
+      console.log(id)
+      console.log(state.tasks)
+      state.tasks.find(task => task.id === id).name = event.target.value;
+      return {tasks: [...state.tasks]}
     })
   }
 }

@@ -16,6 +16,7 @@ class Task extends React.Component {
     };
     this.addNewTask = this.addNewTask.bind(this);
     this.toggleRenameTask = this.toggleRenameTask.bind(this);
+    this.handleRenameTask = this.handleRenameTask.bind(this);
     this.onRemoveTask = this.onRemoveTask.bind(this);
     this.handleCompletion = this.handleCompletion.bind(this);
   }
@@ -23,8 +24,8 @@ class Task extends React.Component {
     return <Form.Group className={this.props.className + " my-1"} control-id={`task-${this.props.name.replace(' ', '-').toLowerCase()}`}>
         <InputGroup>
           <InputGroup.Checkbox onChange={this.handleCompletion} checked={this.props.forceCheck || this.state.isChecked} type="checkbox" id="default-checkbox basic-addon1"/>
-          <FormControl className="flex-fill" variant="outline-secondary" id="inputGroup-sizing-default" value={this.props.name} readOnly={!this.state.renaming} onChange={this.props.onNameChange}/>
-          <FormControl className="flex-shrink" type="date" size="sm"/>
+          <FormControl className="flex-fill" variant="outline-secondary" id="inputGroup-sizing-default" value={this.props.name} readOnly={!this.state.renaming} onChange={event => this.props.onNameChange(event, this.props.id)}/>
+          <FormControl className="flex-shrink-0" type="date" size="sm"/>
           <Button variant='primary' label="Rename task" onClick={this.toggleRenameTask}>
             <img src='/vector-pen.svg'/>
           </Button>
@@ -36,7 +37,7 @@ class Task extends React.Component {
           </Button>
         </InputGroup>
         {this.state.subtasks.map((task, index)=>{
-          return <Task forceCheck={this.state.isChecked} className="ms-4" name={task.name} key={task.id} onDelete={(event) => this.onRemoveTask(event, index)}/>
+          return <Task forceCheck={this.state.isChecked} className="ms-4" name={task.name} key={task.id} id={task.id} onDelete={(event) => this.onRemoveTask(event, index)} onNameChange={this.handleRenameTask}/>
         })}
       </Form.Group>
   };
@@ -55,6 +56,12 @@ class Task extends React.Component {
   }
   handleCompletion(event){
     this.setState(state => ({isChecked: !state.isChecked}))
+  }
+  handleRenameTask(event, id){
+    this.setState((state) => {
+      state.subtasks.find(task => task.id === id).name = event.target.value;
+      return {subtasks: [...state.subtasks]}
+    })
   }
 }
 
