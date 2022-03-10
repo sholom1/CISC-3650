@@ -27,13 +27,13 @@ class Task extends React.Component {
           <FormControl className="flex-fill" variant="outline-secondary" id="inputGroup-sizing-default" value={this.props.name} readOnly={!this.state.renaming} onChange={event => this.props.onNameChange(event, this.props.id)}/>
           <FormControl className="flex-shrink-0" type="date" size="sm"/>
           <Button variant='primary' label="Rename task" onClick={this.toggleRenameTask}>
-            <img src='/vector-pen.svg'/>
+            <img src='./vector-pen.svg'/>
           </Button>
           <Button onClick={this.addNewTask} variant="primary" id="button-addon2">
             +
           </Button>
           <Button variant='danger' label="Delete task" onClick={this.props.onDelete}>
-            <img src='/trash.svg'></img>
+            <img src='./trash.svg'></img>
           </Button>
         </InputGroup>
         {this.state.subtasks.map((task, index)=>{
