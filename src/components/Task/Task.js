@@ -20,13 +20,13 @@ class Task extends React.Component {
           <InputGroup.Checkbox type="checkbox" id="default-checkbox basic-addon1"/>
           <FormControl className="flex-fill" variant="outline-secondary" id="inputGroup-sizing-default" value={this.props.name} readOnly={!this.state.renaming} onChange={this.props.onNameChange}/>
           <Button variant='primary' label="Rename task" onClick={this.toggleRenameTask}>
-            <img src='/vector-pen.svg'/>
+            <img src='./vector-pen.svg'/>
           </Button>
           <Button onClick={this.addNewTask} variant="primary" id="button-addon2">
             +
           </Button>
           <Button variant='danger' label="Delete task" onClick={this.props.onDelete}>
-            <img src='/trash.svg'></img>
+            <img src='./trash.svg'></img>
           </Button>
         </InputGroup>
         {this.state.subtasks.map((taskName, index)=>{
