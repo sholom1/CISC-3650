@@ -37,7 +37,7 @@ class Task extends React.Component {
           </Button>
         </InputGroup>
         {this.state.subtasks.map((task, index)=>{
-          return <Task forceCheck={this.state.isChecked} className="ms-4" name={task.name} key={task.id} id={task.id} onDelete={(event) => this.onRemoveTask(event, index)} onNameChange={this.handleRenameTask}/>
+          return <Task forceCheck={this.state.isChecked || this.props.forceCheck} className="ms-4" name={task.name} key={task.id} id={task.id} onDelete={(event) => this.onRemoveTask(event, index)} onNameChange={this.handleRenameTask}/>
         })}
       </Form.Group>
   };
